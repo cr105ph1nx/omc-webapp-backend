@@ -3,6 +3,7 @@ const membersRouter = require("./members.js");
 const bureauxRouter = require("./bureaux.js");
 const partnersRouter = require("./partners.js");
 const participantsRouter = require("./participants.js");
+const hostsRouter = require("./hosts.js");
 
 module.exports = (app) => {
   app.use("/admins", adminsRouter);
@@ -10,4 +11,5 @@ module.exports = (app) => {
   app.use("/bureaux", bureauxRouter);
   app.use("/partners", partnersRouter);
   app.use("/participants", participantsRouter);
+  app.use("/hosts", hostsRouter);
 };

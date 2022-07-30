@@ -19,6 +19,7 @@ const hostSchema = mongoose.Schema(
     },
     redirectPortfolio: {
       type: String,
+      match: [/^(https):\/\/[^ "]+$/, "Please fill a valid URL"],
     },
     sessions: [
       {
@@ -31,6 +32,7 @@ const hostSchema = mongoose.Schema(
           type: String,
           required: "Session ID is required",
         },
+        _id: false,
       },
     ],
   },
