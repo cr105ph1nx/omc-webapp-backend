@@ -6,7 +6,7 @@ module.exports = {
   async getMember(req, res, next) {
     let member;
     try {
-      member = await member.findById(req.params.memberID);
+      member = await Member.findById(req.params.memberID);
       if (member == null) {
         return res.status(404).json({ error: "Member could not be found." });
       }

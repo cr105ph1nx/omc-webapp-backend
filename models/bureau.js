@@ -7,6 +7,11 @@ const bureauSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    year: {
+      type: Number,
+      required: "Year is required",
+      unique: true,
+    },
     president: {
       fullname: {
         type: String,
