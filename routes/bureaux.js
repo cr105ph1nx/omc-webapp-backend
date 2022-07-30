@@ -40,4 +40,11 @@ router.delete(
   bureauController.deleteBureau
 );
 
+// Setting current year visible
+router.post(
+  "/setVisible",
+  adminController.authRequired,
+  bureauController.setBureauVisible
+);
+
 module.exports = router;

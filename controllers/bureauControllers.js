@@ -71,42 +71,12 @@ module.exports = {
   // Creating a bureau
   async createBureau(req, res, next) {
     try {
-      // create bureau
-      let president = {
-        fullname: req.body.president.fullname,
-        email: req.body.president.email,
-        phonenumber: req.body.president.phonenumber,
-        studentID: req.body.president.studentID,
-        images: req.body.president.images,
-      };
-      let vicePresident = {
-        fullname: req.body.vicePresident.fullname,
-        email: req.body.vicePresident.email,
-        phonenumber: req.body.vicePresident.phonenumber,
-        studentID: req.body.vicePresident.studentID,
-        images: req.body.vicePresident.images,
-      };
-      let secretary = {
-        fullname: req.body.secretary.fullname,
-        email: req.body.secretary.email,
-        phonenumber: req.body.secretary.phonenumber,
-        studentID: req.body.secretary.studentID,
-        images: req.body.secretary.images,
-      };
-      let viceSecretary = {
-        fullname: req.body.viceSecretary.fullname,
-        email: req.body.viceSecretary.email,
-        phonenumber: req.body.viceSecretary.phonenumber,
-        studentID: req.body.viceSecretary.studentID,
-        images: req.body.viceSecretary.images,
-      };
-
       const bureau = new Bureau({
         year: req.body.year,
-        president: president,
-        vicePresident: vicePresident,
-        secretary: secretary,
-        viceSecretary: viceSecretary,
+        president: req.body.president,
+        vicePresident: req.body.vicePresident,
+        secretary: req.body.secretary,
+        viceSecretary: req.body.viceSecretary,
       });
 
       await bureau.save();
@@ -121,13 +91,28 @@ module.exports = {
     next();
   },
 
+  //  Setting current bureau as visible
+  async setBureauVisible(req, res, next) {
+    try {
+      let currentYear = new Date().getFullYear();
+      console.log("year: ", currentYear);
+      let bureau = await Bureau.findOne({ year: currentYear });
+      bureau.isVisible = true;
+      bureau.save();
+      res.status(201).json({
+        message: "Bureau is now visible !",
+      });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+
+    next();
+  },
+
   // Updating a bureau
   async updateBureau(req, res, next) {
     if (req.body.year != null) {
       res.bureau.year = req.body.year;
-    }
-    if (req.body.isVisible != null) {
-      res.bureau.isVisible = req.body.isVisible;
     }
     if (req.body.president != null) {
       // president

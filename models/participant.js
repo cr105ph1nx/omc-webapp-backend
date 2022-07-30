@@ -52,6 +52,17 @@ const participantSchema = mongoose.Schema(
       type: String,
       required: "Experience is required",
     },
+    session: {
+      sessionType: {
+        type: String,
+        required: "Session type is required",
+        match: [/COURSE|ACTIVITY/, "Please fill a valid session type"],
+      },
+      sessionID: {
+        type: String,
+        required: "Session ID is required",
+      },
+    },
   },
   {
     timestamps: true,
