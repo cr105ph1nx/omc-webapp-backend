@@ -1,0 +1,15 @@
+/* SESSION TYPES */
+const ACTIVITY = "ACTIVITY";
+const COURSE = "COURSE";
+const EVENT = "EVENT";
+/* ROUTE SETTINGS */
+const PAGELENGTH = 6;
+
+module.exports = {
+  /* SESSION TYPES */
+  ACTIVITY,
+  COURSE,
+  EVENT,
+  /* ROUTE SETTINGS */
+  PAGELENGTH,
+};
