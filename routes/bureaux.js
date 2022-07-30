@@ -6,6 +6,13 @@ const adminController = require("../controllers/adminControllers");
 // Getting all bureaux
 router.get("/:page?", adminController.authRequired, bureauController.index);
 
+// Getting current bureau
+router.post(
+  "/current",
+  adminController.authRequired,
+  bureauController.getCurrentBureau
+);
+
 // Getting one bureau by id
 router.get(
   "/:bureauID",

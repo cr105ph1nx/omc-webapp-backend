@@ -57,6 +57,17 @@ module.exports = {
     next();
   },
 
+  // Getting current bureau
+  async getCurrentBureau(req, res, next) {
+    try {
+      // current year is found in req.body
+      let bureau = await Bureau.findOne({ year: req.body.year });
+      res.status(201).json(bureau);
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
+  },
+
   // Creating a bureau
   async createBureau(req, res, next) {
     try {
