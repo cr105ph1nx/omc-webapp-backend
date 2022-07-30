@@ -71,8 +71,9 @@ const courseSchema = mongoose.Schema(
     resources: {
       type: String,
     },
-    host: [
+    hosts: [
       {
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Host",
         required: "Host is required",
         unique: true,
@@ -80,12 +81,14 @@ const courseSchema = mongoose.Schema(
     ],
     participants: [
       {
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Participant",
         unique: true,
       },
     ],
     reviews: [
       {
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Review",
         unique: true,
       },

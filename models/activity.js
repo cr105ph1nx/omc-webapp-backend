@@ -73,6 +73,7 @@ const activitySchema = mongoose.Schema(
     },
     host: [
       {
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Host",
         required: "Host is required",
         unique: true,
@@ -80,12 +81,14 @@ const activitySchema = mongoose.Schema(
     ],
     participants: [
       {
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Participant",
         unique: true,
       },
     ],
     reviews: [
       {
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Review",
         unique: true,
       },

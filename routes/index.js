@@ -4,6 +4,8 @@ const bureauxRouter = require("./bureaux.js");
 const partnersRouter = require("./partners.js");
 const participantsRouter = require("./participants.js");
 const hostsRouter = require("./hosts.js");
+const eventsRouter = require("./events.js");
+const coursesRouter = require("./courses.js");
 
 module.exports = (app) => {
   app.use("/admins", adminsRouter);
@@ -12,4 +14,6 @@ module.exports = (app) => {
   app.use("/partners", partnersRouter);
   app.use("/participants", participantsRouter);
   app.use("/hosts", hostsRouter);
+  app.use("/events", eventsRouter);
+  app.use("/courses", coursesRouter);
 };

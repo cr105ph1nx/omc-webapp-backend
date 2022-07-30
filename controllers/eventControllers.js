@@ -145,6 +145,7 @@ module.exports = {
         ...(filters.title && {
           title: { $regex: filters.title, $options: "$i" },
         }),
+        ...(filters.rating && { rating: filters.rating }),
         ...(filters.tag && { tags: filters.tag }),
         ...(filters.tags && { tags: filters.tags }),
       };
