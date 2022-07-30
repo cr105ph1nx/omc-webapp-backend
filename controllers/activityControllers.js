@@ -91,6 +91,9 @@ module.exports = {
 
   // Updating an activity
   async updateActivity(req, res, next) {
+    if (req.body.isActive != null) {
+      res.course.isActive = req.body.isActive;
+    }
     if (req.body.title != null) {
       res.activity.title = req.body.title;
     }
@@ -158,9 +161,9 @@ module.exports = {
       let skip;
       let totalDocs, totalPages;
 
-      /* {title, tags} */
       let filters = req.body;
       let queryObj = {
+        ...(filters.isActive && { isActive: filters.isActive }),
         ...(filters.title && {
           title: { $regex: filters.title, $options: "$i" },
         }),

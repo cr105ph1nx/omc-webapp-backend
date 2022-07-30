@@ -91,6 +91,9 @@ module.exports = {
 
   // Updating an course
   async updateCourse(req, res, next) {
+    if (req.body.isActive != null) {
+      res.course.isActive = req.body.isActive;
+    }
     if (req.body.title != null) {
       res.course.title = req.body.title;
     }
@@ -161,6 +164,7 @@ module.exports = {
       /* {title, tags} */
       let filters = req.body;
       let queryObj = {
+        ...(filters.isActive && { isActive: filters.isActive }),
         ...(filters.title && {
           title: { $regex: filters.title, $options: "$i" },
         }),
