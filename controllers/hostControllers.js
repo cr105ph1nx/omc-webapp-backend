@@ -167,6 +167,7 @@ module.exports = {
           email: { $regex: filters.email, $options: "$i" },
         }),
         ...(filters.session && { sessions: filters.session }),
+        ...(filters.sessions && { sessions: filters.sessions }),
       };
 
       if (!req.params.page || req.params.page === 1) {

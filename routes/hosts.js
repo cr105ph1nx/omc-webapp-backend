@@ -3,7 +3,7 @@ const router = express.Router();
 const hostController = require("../controllers/hostControllers");
 const adminController = require("../controllers/adminControllers");
 
-// Getting all particiapnts
+// Getting all hosts
 router.get("/:page?", adminController.authRequired, hostController.index);
 
 // Getting one host by id
