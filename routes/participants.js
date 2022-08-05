@@ -50,4 +50,11 @@ router.post(
   adminController.authRequired,
   participantController.acceptParticipants
 );
+
+// Rejecting multiple participants
+router.post(
+  "/reject",
+  adminController.authRequired,
+  participantController.rejectParticipants
+);
 module.exports = router;

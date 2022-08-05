@@ -47,4 +47,10 @@ router.post(
   memberController.acceptMembers
 );
 
+// Rejecting multiple members
+router.post(
+  "/reject",
+  adminController.authRequired,
+  memberController.rejectMembers
+);
 module.exports = router;

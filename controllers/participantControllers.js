@@ -215,4 +215,34 @@ module.exports = {
 
     next();
   },
+
+  // Reject multiple members
+  async rejectParticipants(req, res, next) {
+    try {
+      // req.body.participants has id of all participants that should be accepted
+      let { participants } = req.body;
+      let i,
+        length = participants.length,
+        unhandled = [];
+      // update status
+      for (i = 0; i < length; i++) {
+        await Participant.findById({ _id: participants[i] })
+          .then((participant) => {
+            if (participant) {
+              participant.isAccepted = false;
+              participant.save();
+            } else unhandled = participants[i];
+          })
+          .catch((err) => {
+            unhandled = participants[i];
+          });
+      }
+
+      res.status(200).json({ message: "Participants rejected.", unhandled });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+
+    next();
+  },
 };
