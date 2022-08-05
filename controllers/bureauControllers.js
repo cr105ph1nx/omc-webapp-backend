@@ -68,15 +68,36 @@ module.exports = {
     }
   },
 
+  // Organizing the images in an obj
+  async getBureauImages(req, res, next) {
+    /* After `upload.array('image'): We find the uploaded image info in `req.files` */
+    try {
+      console.log(req.body);
+      console.log(req.files);
+      let images = [];
+      await req.files.forEach((file) => {
+        images.push(file.path);
+      });
+
+      console.log(images);
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+
+    next();
+  },
+
   // Creating a bureau
   async createBureau(req, res, next) {
+    /* the data is in res object */
     try {
+      console.log(res);
       const bureau = new Bureau({
         year: req.body.year,
-        president: req.body.president,
-        vicePresident: req.body.vicePresident,
-        secretary: req.body.secretary,
-        viceSecretary: req.body.viceSecretary,
+        president: res.president,
+        vicePresident: res.vicePresident,
+        secretary: res.secretary,
+        viceSecretary: res.viceSecretary,
       });
 
       await bureau.save();

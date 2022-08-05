@@ -59,23 +59,29 @@ module.exports = {
 
   // Creating an course
   async createCourse(req, res, next) {
-    // create course
-    const course = new Course({
-      title: req.body.title,
-      tags: req.body.tags,
-      description: req.body.description,
-      ...(req.body.images && { images: req.body.images }),
-      location: req.body.location,
-      startDate: req.body.startDate,
-      ...(req.body.endDate && { endDate: req.body.endDate }),
-      period: req.body.period,
-      capacity: req.body.capacity,
-      level: req.body.level,
-      ...(req.body.resources && { resources: req.body.resources }),
-      hosts: req.body.hosts,
-    });
+    /* After `upload.array('images'): We find the uploaded image info in `req.files` */
 
     try {
+      let images = [];
+      await req.files.forEach((file) => {
+        images.push(file.path);
+      });
+      // create course
+      const course = new Course({
+        title: req.body.title,
+        tags: req.body.tags,
+        description: req.body.description,
+        ...(images !== [] && { images }),
+        location: req.body.location,
+        startDate: req.body.startDate,
+        ...(req.body.endDate && { endDate: req.body.endDate }),
+        period: req.body.period,
+        capacity: req.body.capacity,
+        level: req.body.level,
+        ...(req.body.resources && { resources: req.body.resources }),
+        hosts: req.body.hosts,
+      });
+
       await course.save();
 
       res.status(201).json({

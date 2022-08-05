@@ -9,8 +9,7 @@ const eventSchema = mongoose.Schema(
     },
     rating: {
       type: Number,
-      required: "rating is required",
-      default: 5,
+      default: null,
       min: 0,
       max: 5,
     },
@@ -45,7 +44,6 @@ const eventSchema = mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Review",
-        unique: true,
       },
     ],
   },

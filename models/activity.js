@@ -13,8 +13,7 @@ const activitySchema = mongoose.Schema(
     },
     rating: {
       type: Number,
-      required: "rating is required",
-      default: 5,
+      default: null,
       min: 0,
       max: 5,
     },
@@ -90,7 +89,6 @@ const activitySchema = mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Review",
-        unique: true,
       },
     ],
   },

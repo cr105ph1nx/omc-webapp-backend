@@ -59,11 +59,15 @@ module.exports = {
 
   // Creating a partner
   async createPartner(req, res, next) {
+    /* After `upload.single('image'): We find the uploaded image info in `req.file` */
     try {
+      console.log(req.body);
+      console.log(req.file);
       // create partner
       const partner = new Partner({
         name: req.body.name,
-        logo: req.body.logo,
+        // add name of file in image field
+        logo: req.file.filename,
         ...(req.body.url && { url: req.body.url }),
       });
 

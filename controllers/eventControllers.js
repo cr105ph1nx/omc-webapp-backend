@@ -59,20 +59,24 @@ module.exports = {
 
   // Creating an event
   async createEvent(req, res, next) {
-    // create event
-    const event = new Event({
-      title: req.body.title,
-      tags: req.body.tags,
-      description: req.body.description,
-      ...(req.body.images && { images: req.body.images }),
-      ...(req.body.websiteUrl && { websiteUrl: req.body.websiteUrl }),
-      ...(req.body.agendaUrl && { agendaUrl: req.body.agendaUrl }),
-      ...(req.body.sponsoringFolderUrl && {
-        sponsoringFolderUrl: req.body.sponsoringFolderUrl,
-      }),
-    });
-
+    /* After `upload.array('images'): We find the uploaded image info in `req.files` */
     try {
+      let images = [];
+      await req.files.forEach((file) => {
+        images.push(file.path);
+      });
+      // create event
+      const event = new Event({
+        title: req.body.title,
+        tags: req.body.tags,
+        description: req.body.description,
+        ...(images !== [] && { images }),
+        ...(req.body.websiteUrl && { websiteUrl: req.body.websiteUrl }),
+        ...(req.body.agendaUrl && { agendaUrl: req.body.agendaUrl }),
+        ...(req.body.sponsoringFolderUrl && {
+          sponsoringFolderUrl: req.body.sponsoringFolderUrl,
+        }),
+      });
       await event.save();
 
       res.status(201).json({

@@ -59,15 +59,16 @@ module.exports = {
 
   // Creating an slideshow
   async createSlideshow(req, res, next) {
-    // create slideshow
-    const slideshow = new Slideshow({
-      title: req.body.title,
-      image: req.body.image,
-      description: req.body.description,
-      ...(req.body.actionButton && { actionButton: req.body.actionButton }),
-    });
-
+    /* After `upload.single('image'): We find the uploaded image info in `req.file` */
     try {
+      // create slideshow
+      const slideshow = new Slideshow({
+        title: req.body.title,
+        // add name of file in image field
+        image: req.file.filename,
+        description: req.body.description,
+        ...(req.body.actionButton && { actionButton: req.body.actionButton }),
+      });
       await slideshow.save();
 
       res.status(201).json({
