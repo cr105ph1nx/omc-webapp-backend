@@ -2,4 +2,17 @@ node_modules/
 .vscode/
 tests/
 .env
-public/
+
+# Images 
+public/uploads/images/activities/*
+public/uploads/images/bureaux/*
+public/uploads/images/courses/*
+public/uploads/images/events/*
+public/uploads/images/partners/*
+public/uploads/images/slideshows/*
+!public/uploads/images/activities/.gitkeep
+!public/uploads/images/bureaux/.gitkeep
+!public/uploads/images/courses/.gitkeep
+!public/uploads/images/events/.gitkeep
+!public/uploads/images/partners/.gitkeep
+!public/uploads/images/slideshows/.gitkeep

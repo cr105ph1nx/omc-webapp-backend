@@ -70,16 +70,41 @@ module.exports = {
 
   // Organizing the images in an obj
   async getBureauImages(req, res, next) {
-    /* After `upload.array('image'): We find the uploaded image info in `req.files` */
+    /* After `upload.array('____Images'): We find the uploaded image info in `req.files` */
     try {
-      console.log(req.body);
-      console.log(req.files);
-      let images = [];
-      await req.files.forEach((file) => {
-        images.push(file.path);
+      // check if all images are sent
+      if (
+        !req.files.presidentImages ||
+        !req.files.vicePresidentImages ||
+        !req.files.secretaryImages ||
+        !req.files.viceSecretaryImages
+      ) {
+        res.status(400).json({ error: "Insufficient Information..." });
+      }
+
+      // define vars
+      let images = {};
+      images.presidentImages = [];
+      images.vicePresidentImages = [];
+      images.secretaryImages = [];
+      images.viceSecretaryImages = [];
+
+      // push file path to object
+      await req.files.presidentImages.forEach((file) => {
+        images.presidentImages.push(file.path);
+      });
+      await req.files.vicePresidentImages.forEach((file) => {
+        images.vicePresidentImages.push(file.path);
+      });
+      await req.files.secretaryImages.forEach((file) => {
+        images.secretaryImages.push(file.path);
+      });
+      await req.files.viceSecretaryImages.forEach((file) => {
+        images.viceSecretaryImages.push(file.path);
       });
 
-      console.log(images);
+      // send object as res
+      res.images = images;
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
@@ -89,15 +114,21 @@ module.exports = {
 
   // Creating a bureau
   async createBureau(req, res, next) {
-    /* the data is in res object */
+    /* the uploaded images are in res.images object */
     try {
-      console.log(res);
+      let { year, president, vicePresident, secretary, viceSecretary } =
+        req.body;
+      president.images = res.images.presidentImages;
+      vicePresident.images = res.images.vicePresidentImages;
+      secretary.images = res.images.secretaryImages;
+      viceSecretary.images = res.images.viceSecretaryImages;
+
       const bureau = new Bureau({
-        year: req.body.year,
-        president: res.president,
-        vicePresident: res.vicePresident,
-        secretary: res.secretary,
-        viceSecretary: res.viceSecretary,
+        year,
+        president,
+        vicePresident,
+        secretary,
+        viceSecretary,
       });
 
       await bureau.save();
@@ -106,7 +137,7 @@ module.exports = {
         error: null,
       });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();

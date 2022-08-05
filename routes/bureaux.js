@@ -41,9 +41,7 @@ router.get(
 router.post(
   "/current",
   adminController.authRequired,
-  upload.array("images", 8),
-  bureauController.getBureauImages
-  //bureauController.getCurrentBureau
+  bureauController.getCurrentBureau
 );
 
 // Getting one bureau by id
@@ -55,7 +53,30 @@ router.get(
 );
 
 // Creating a bureau
-router.post("/", adminController.authRequired, bureauController.createBureau);
+router.post(
+  "/",
+  adminController.authRequired,
+  upload.fields([
+    {
+      name: "presidentImages",
+      maxCount: 2,
+    },
+    {
+      name: "vicePresidentImages",
+      maxCount: 2,
+    },
+    {
+      name: "secretaryImages",
+      maxCount: 2,
+    },
+    {
+      name: "viceSecretaryImages",
+      maxCount: 2,
+    },
+  ]),
+  bureauController.getBureauImages,
+  bureauController.createBureau
+);
 
 // Updating a bureau
 router.patch(
