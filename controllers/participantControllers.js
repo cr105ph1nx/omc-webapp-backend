@@ -274,7 +274,7 @@ module.exports = {
           "email",
           "phonenumber",
           "studentID",
-          "establishement",
+          "establishment",
           "level",
           "experience",
         ],
