@@ -193,4 +193,34 @@ module.exports = {
       res.status(500).json({ error: err.message });
     }
   },
+
+  // Accept multiple members
+  async acceptMembers(req, res, next) {
+    try {
+      // req.body.members has id of all members that should be accepted
+      let { members } = req.body;
+      let i,
+        length = members.length,
+        unhandled = [];
+      // update status
+      for (i = 0; i < length; i++) {
+        await Member.findById({ _id: members[i] })
+          .then((member) => {
+            if (member) {
+              member.isAccepted = true;
+              member.save();
+            } else unhandled = members[i];
+          })
+          .catch((err) => {
+            unhandled = members[i];
+          });
+      }
+
+      res.status(200).json({ message: "Members accepted.", unhandled });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+
+    next();
+  },
 };

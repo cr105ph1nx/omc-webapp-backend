@@ -44,4 +44,10 @@ router.post(
   participantController.searchParticipant
 );
 
+// Accepting multiple participants
+router.post(
+  "/accept",
+  adminController.authRequired,
+  participantController.acceptParticipants
+);
 module.exports = router;

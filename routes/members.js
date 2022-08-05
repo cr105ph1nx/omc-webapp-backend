@@ -40,4 +40,11 @@ router.post(
   memberController.searchMember
 );
 
+// Accepting multiple members
+router.post(
+  "/accept",
+  adminController.authRequired,
+  memberController.acceptMembers
+);
+
 module.exports = router;
