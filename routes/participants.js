@@ -5,14 +5,14 @@ const adminController = require("../controllers/adminControllers");
 
 // Getting all particiapnts
 router.get(
-  "/:page?",
+  "/index/:page?",
   adminController.authRequired,
   participantController.index
 );
 
 // Getting one participant by id
 router.get(
-  "/:participantID",
+  "/getByID/:participantID",
   adminController.authRequired,
   participantController.getParticipant,
   participantController.getParticipantByID
@@ -57,4 +57,12 @@ router.post(
   adminController.authRequired,
   participantController.rejectParticipants
 );
+
+// Downloading all accepted members
+router.post(
+  "/downloadAccepted",
+  adminController.authRequired,
+  participantController.downloadAccepted
+);
+
 module.exports = router;

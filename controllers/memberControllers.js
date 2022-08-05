@@ -1,5 +1,6 @@
 const Member = require("../models/member");
 const { PAGELENGTH } = require("../const");
+const converter = require("json-2-csv");
 
 module.exports = {
   // Find member by ID
@@ -247,6 +248,40 @@ module.exports = {
       }
 
       res.status(200).json({ message: "Members rejected.", unhandled });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+
+    next();
+  },
+
+  // Download all accepted members
+  async downloadAccepted(req, res, next) {
+    try {
+      // get all accepted members
+      let members = await Member.find({ isAccepted: true });
+      // convert from json to csv format
+      const csvString = await converter.json2csvAsync(members, {
+        emptyFieldValue: "N/A",
+        excelBOM: true,
+        excludeKeys: ["_id", "isAccepted"],
+        keys: [
+          "createdAt",
+          "fullname",
+          "email",
+          "phonenumber",
+          "studentID",
+          "level",
+          "faculty",
+          "motivation",
+          "team",
+          "experience",
+        ],
+      });
+      // download file
+      res.setHeader("Content-disposition", "attachment; filename=members.csv");
+      res.set("Content-Type", "text/csv");
+      res.status(200).send(csvString);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }

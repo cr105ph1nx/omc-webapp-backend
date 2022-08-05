@@ -1,5 +1,6 @@
 const Participant = require("../models/participant");
 const { PAGELENGTH } = require("../const");
+const converter = require("json-2-csv");
 
 module.exports = {
   // Find participant by ID
@@ -244,5 +245,49 @@ module.exports = {
     }
 
     next();
+  },
+
+  // Download all accepted participants from given session
+  async downloadAccepted(req, res, next) {
+    try {
+      let { sessionType, sessionID } = req.body;
+      if (!sessionType || !sessionID) {
+        return res.status(400).json({ error: "Insufficient Information..." });
+      }
+      // get all participants that are accepted to given session
+      let participants = await Participant.find({
+        isAccepted: true,
+        session: {
+          sessionType,
+          sessionID,
+        },
+      });
+
+      // convert from json to csv format
+      const csvString = await converter.json2csvAsync(participants, {
+        emptyFieldValue: "N/A",
+        excelBOM: true,
+        excludeKeys: ["_id", "isAccepted"],
+        keys: [
+          "createdAt",
+          "fullname",
+          "email",
+          "phonenumber",
+          "studentID",
+          "establishement",
+          "level",
+          "experience",
+        ],
+      });
+      // download file
+      res.setHeader(
+        "Content-disposition",
+        "attachment; filename=participants.csv"
+      );
+      res.set("Content-Type", "text/csv");
+      res.status(200).send(csvString);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
   },
 };

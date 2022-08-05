@@ -4,11 +4,15 @@ const courseController = require("../controllers/courseControllers");
 const adminController = require("../controllers/adminControllers");
 
 // Getting all courses
-router.get("/:page?", adminController.authRequired, courseController.index);
+router.get(
+  "/index/:page?",
+  adminController.authRequired,
+  courseController.index
+);
 
 // Getting one course by id
 router.get(
-  "/:courseID",
+  "/getByID/:courseID",
   adminController.authRequired,
   courseController.getCourse,
   courseController.getCourseByID

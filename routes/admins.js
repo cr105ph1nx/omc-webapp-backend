@@ -3,11 +3,15 @@ const router = express.Router();
 const adminController = require("../controllers/adminControllers");
 
 // Getting all admins
-router.get("/:page?", adminController.authRequired, adminController.index);
+router.get(
+  "/index/:page?",
+  adminController.authRequired,
+  adminController.index
+);
 
 // Getting one admin by id
 router.get(
-  "/:adminID",
+  "/getByID/:adminID",
   adminController.authRequired,
   adminController.getAdmin,
   adminController.getAdminByID

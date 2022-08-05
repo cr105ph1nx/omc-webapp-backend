@@ -4,11 +4,11 @@ const partnerController = require("../controllers/partnerControllers");
 const adminController = require("../controllers/adminControllers");
 
 // Getting all partners
-router.get("/:page?", partnerController.index);
+router.get("/index/:page?", partnerController.index);
 
 // Getting one partner by id
 router.get(
-  "/:partnerID",
+  "/getByID/:partnerID",
   adminController.authRequired,
   partnerController.getPartner,
   partnerController.getPartnerByID

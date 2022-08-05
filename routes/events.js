@@ -4,11 +4,15 @@ const eventController = require("../controllers/eventControllers");
 const adminController = require("../controllers/adminControllers");
 
 // Getting all events
-router.get("/:page?", adminController.authRequired, eventController.index);
+router.get(
+  "/index/:page?",
+  adminController.authRequired,
+  eventController.index
+);
 
 // Getting one event by id
 router.get(
-  "/:eventID",
+  "/getByID/:eventID",
   adminController.authRequired,
   eventController.getEvent,
   eventController.getEventByID

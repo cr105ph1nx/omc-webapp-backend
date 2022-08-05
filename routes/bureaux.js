@@ -4,7 +4,11 @@ const bureauController = require("../controllers/bureauControllers");
 const adminController = require("../controllers/adminControllers");
 
 // Getting all bureaux
-router.get("/:page?", adminController.authRequired, bureauController.index);
+router.get(
+  "/index/:page?",
+  adminController.authRequired,
+  bureauController.index
+);
 
 // Getting current bureau
 router.post(
@@ -15,7 +19,7 @@ router.post(
 
 // Getting one bureau by id
 router.get(
-  "/:bureauID",
+  "/getByID/:bureauID",
   adminController.authRequired,
   bureauController.getBureau,
   bureauController.getBureauByID

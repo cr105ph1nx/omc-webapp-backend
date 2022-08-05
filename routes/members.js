@@ -4,11 +4,15 @@ const memberController = require("../controllers/memberControllers");
 const adminController = require("../controllers/adminControllers");
 
 // Getting all members
-router.get("/:page?", adminController.authRequired, memberController.index);
+router.get(
+  "/index/:page?",
+  adminController.authRequired,
+  memberController.index
+);
 
 // Getting one member by id
 router.get(
-  "/:memberID",
+  "/getByID/:memberID",
   adminController.authRequired,
   memberController.getMember,
   memberController.getMemberByID
@@ -53,4 +57,12 @@ router.post(
   adminController.authRequired,
   memberController.rejectMembers
 );
+
+// Downloading all accepted members
+router.get(
+  "/downloadAccepted",
+  adminController.authRequired,
+  memberController.downloadAccepted
+);
+
 module.exports = router;

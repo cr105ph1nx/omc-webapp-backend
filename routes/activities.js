@@ -4,11 +4,15 @@ const activityController = require("../controllers/activityControllers");
 const adminController = require("../controllers/adminControllers");
 
 // Getting all activities
-router.get("/:page?", adminController.authRequired, activityController.index);
+router.get(
+  "/index/:page?",
+  adminController.authRequired,
+  activityController.index
+);
 
 // Getting one activity by id
 router.get(
-  "/:activityID",
+  "/getByID/:activityID",
   adminController.authRequired,
   activityController.getActivity,
   activityController.getActivityByID

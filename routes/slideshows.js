@@ -4,11 +4,15 @@ const slideshowController = require("../controllers/slideshowControllers");
 const adminController = require("../controllers/adminControllers");
 
 // Getting all slideshows
-router.get("/:page?", adminController.authRequired, slideshowController.index);
+router.get(
+  "/index/:page?",
+  adminController.authRequired,
+  slideshowController.index
+);
 
 // Getting one slideshow by id
 router.get(
-  "/:slideshowID",
+  "/getByID/:slideshowID",
   adminController.authRequired,
   slideshowController.getSlideshow,
   slideshowController.getSlideshowByID
