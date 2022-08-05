@@ -8,6 +8,7 @@ const eventsRouter = require("./events.js");
 const coursesRouter = require("./courses.js");
 const activitiesRouter = require("./activities.js");
 const slideshowsRouter = require("./slideshows.js");
+const guestsRouter = require("./guests.js");
 
 module.exports = (app) => {
   app.use("/admins", adminsRouter);
@@ -20,4 +21,5 @@ module.exports = (app) => {
   app.use("/courses", coursesRouter);
   app.use("/activities", activitiesRouter);
   app.use("/slideshows", slideshowsRouter);
+  app.use("/guests", guestsRouter);
 };
