@@ -4,7 +4,7 @@ const COURSE = "COURSE";
 const EVENT = "EVENT";
 /* ROUTE SETTINGS */
 const PAGELENGTH = 6;
-
+const MAXAGE = 400000;
 module.exports = {
   /* SESSION TYPES */
   ACTIVITY,
@@ -12,4 +12,5 @@ module.exports = {
   EVENT,
   /* ROUTE SETTINGS */
   PAGELENGTH,
+  MAXAGE,
 };
