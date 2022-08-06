@@ -9,6 +9,7 @@ const coursesRouter = require("./courses.js");
 const activitiesRouter = require("./activities.js");
 const slideshowsRouter = require("./slideshows.js");
 const guestsRouter = require("./guests.js");
+const reviewsRouter = require("./reviews.js");
 
 module.exports = (app) => {
   app.use("/admins", adminsRouter);
@@ -22,4 +23,5 @@ module.exports = (app) => {
   app.use("/activities", activitiesRouter);
   app.use("/slideshows", slideshowsRouter);
   app.use("/guests", guestsRouter);
+  app.use("/reviews", reviewsRouter);
 };

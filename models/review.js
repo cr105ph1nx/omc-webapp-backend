@@ -3,6 +3,10 @@ const uniqueValidator = require("mongoose-unique-validator");
 
 const reviewSchema = mongoose.Schema(
   {
+    isVisible: {
+      type: Boolean,
+      default: true,
+    },
     client_id: {
       type: String,
       required: "Client ID is required",
