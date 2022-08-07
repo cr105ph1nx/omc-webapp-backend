@@ -54,6 +54,7 @@ router.patch(
   "/:partnerID",
   adminController.authRequired,
   partnerController.getPartner,
+  upload.single("logo"),
   partnerController.updatePartner
 );
 

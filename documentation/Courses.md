@@ -171,6 +171,7 @@ Authorization: Bearer ...
 | title       | string          | no       |                                     |
 | tags        | array of string | no       |                                     |
 | description | string          | no       |                                     |
+| images      | files           | no       |                                     |
 | startDate   | date            | no       |                                     |
 | endDate     | date            | no       |                                     |
 | period      | number          | no       |                                     |

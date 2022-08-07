@@ -120,6 +120,7 @@ Authorization: Bearer ...
 | ----- | ------ | -------- | ------- |
 | name  | string | no       |         |
 | url   | string | no       |         |
+| logo  | file   | no       |         |
 
 ### Response
 

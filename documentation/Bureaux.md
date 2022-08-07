@@ -147,13 +147,17 @@ PATCH <baseURL>/bureaux/:bureauID
 Authorization: Bearer ...
 ```
 
-| Field         | Type   | Required | Matches                                    |
-| ------------- | ------ | -------- | ------------------------------------------ |
-| president     | object | yes      | {fullname, email, phonenumber, studentID } |
-| vicePresident | object | yes      | {fullname, email, phonenumber, studentID } |
-| secretary     | object | yes      | {fullname, email, phonenumber, studentID } |
-| viceSecretary | object | yes      | {fullname, email, phonenumber, studentID } |
-| year          | number | yes      | {fullname, email, phonenumber, studentID } |
+| Field               | Type   | Required | Matches                                    |
+| ------------------- | ------ | -------- | ------------------------------------------ |
+| president           | object | no       | {fullname, email, phonenumber, studentID } |
+| vicePresident       | object | no       | {fullname, email, phonenumber, studentID } |
+| secretary           | object | no       | {fullname, email, phonenumber, studentID } |
+| viceSecretary       | object | no       | {fullname, email, phonenumber, studentID } |
+| year                | number | no       |                                            |
+| presidentImages     | file   | no       |                                            |
+| vicePresidentImages | file   | no       |                                            |
+| secretaryImages     | file   | no       |                                            |
+| viceSecretaryImages | file   | no       |                                            |
 
 ### Response
 
@@ -171,7 +175,7 @@ Authorization: Bearer ...
 
 ---
 
-## Update bureau
+## Set current bureau visible
 
 ```
 PATCH <baseURL>/bureaux/setVisible

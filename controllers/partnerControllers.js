@@ -90,6 +90,10 @@ module.exports = {
     if (req.body.url != null) {
       res.partner.url = req.body.url;
     }
+
+    if (req.file != null) {
+      res.partner.logo = req.file.filename;
+    }
     try {
       const updatedPartner = await res.partner.save();
       res.status(200).json({ partner: updatedPartner });

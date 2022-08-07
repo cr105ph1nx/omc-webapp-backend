@@ -91,6 +91,7 @@ module.exports = {
 
   // Updating an event
   async updateEvent(req, res, next) {
+    /* After `upload.array('images'): We find the uploaded image info in `req.files` */
     if (req.body.title != null) {
       res.event.title = req.body.title;
     }
@@ -108,6 +109,13 @@ module.exports = {
     }
     if (req.body.sponsoringFolderUrl != null) {
       res.event.sponsoringFolderUrl = req.body.sponsoringFolderUrl;
+    }
+    if (req.files != null) {
+      let images = [];
+      await req.files.forEach((file) => {
+        images.push(file.path);
+      });
+      res.event.images = images;
     }
     try {
       const updatedEvent = await res.event.save();

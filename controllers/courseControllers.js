@@ -133,6 +133,13 @@ module.exports = {
       res.course.hosts = req.body.hosts;
     }
 
+    if (req.files != null) {
+      let images = [];
+      await req.files.forEach((file) => {
+        images.push(file.path);
+      });
+      res.course.images = images;
+    }
     try {
       const updatedCourse = await res.course.save();
       res.status(200).json({ course: updatedCourse });

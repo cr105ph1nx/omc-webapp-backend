@@ -58,6 +58,7 @@ router.patch(
   "/:eventID",
   adminController.authRequired,
   eventController.getEvent,
+  upload.array("images", 10),
   eventController.updateEvent
 );
 

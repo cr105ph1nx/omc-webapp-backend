@@ -152,6 +152,7 @@ Authorization: Bearer ...
 | isVisible    | boolean | no       |         |
 | title        | string  | no       |         |
 | description  | string  | no       |         |
+| image        | file    | no       |         |
 | actionButton | object  | no       |         |
 
 ### Response

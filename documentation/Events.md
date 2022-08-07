@@ -158,6 +158,7 @@ Authorization: Bearer ...
 | title               | string          | no       |         |
 | tags                | array of string | no       |         |
 | description         | string          | no       |         |
+| images              | files           | no       |         |
 | websiteUrl          | string          | no       |         |
 | agendaUrl           | string          | no       |         |
 | sponsoringFolderUrl | string          | no       |         |

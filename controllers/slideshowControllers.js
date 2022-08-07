@@ -83,6 +83,7 @@ module.exports = {
 
   // Updating an slideshow
   async updateSlideshow(req, res, next) {
+    /* After `upload.single('image'): We find the uploaded image info in `req.file` */
     if (req.body.isVisible != null) {
       res.course.isVisible = req.body.isVisible;
     }
@@ -94,6 +95,10 @@ module.exports = {
     }
     if (req.body.actionButton != null) {
       res.slideshow.actionButton = req.body.actionButton;
+    }
+
+    if (req.file != null) {
+      res.slideshow.image = req.file.filename;
     }
     try {
       const updatedSlideshow = await res.slideshow.save();

@@ -181,6 +181,38 @@ module.exports = {
       // viceSecretary
       res.bureau.viceSecretary = req.body.viceSecretary;
     }
+
+    // update images
+    if (req.files.presidentImages != null) {
+      let presidentImages = [];
+      // push file path to object
+      await req.files.presidentImages.forEach((file) => {
+        presidentImages.push(file.path);
+      });
+      res.bureau.president.images = presidentImages;
+    }
+    if (req.files.vicePresidentImages != null) {
+      let vicePresidentImages = [];
+      await req.files.vicePresidentImages.forEach((file) => {
+        vicePresidentImages.push(file.path);
+      });
+      res.bureau.vicePresident.images = vicePresidentImages;
+    }
+    if (req.files.secretaryImages != null) {
+      let secretaryImages = [];
+      await req.files.secretaryImages.forEach((file) => {
+        secretaryImages.push(file.path);
+      });
+      res.bureau.secretary.images = secretaryImages;
+    }
+    if (req.files.viceSecretaryImages != null) {
+      let viceSecretaryImages = [];
+      await req.files.viceSecretaryImages.forEach((file) => {
+        viceSecretaryImages.push(file.path);
+      });
+      res.bureau.viceSecretary.images = viceSecretaryImages;
+    }
+
     try {
       const updatedBureau = await res.bureau.save();
       res.status(200).json({ bureau: updatedBureau });

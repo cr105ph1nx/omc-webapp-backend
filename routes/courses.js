@@ -58,6 +58,7 @@ router.patch(
   "/:courseID",
   adminController.authRequired,
   courseController.getCourse,
+  upload.array("images", 10),
   courseController.updateCourse
 );
 

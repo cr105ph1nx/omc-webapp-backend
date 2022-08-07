@@ -83,6 +83,24 @@ router.patch(
   "/:bureauID",
   adminController.authRequired,
   bureauController.getBureau,
+  upload.fields([
+    {
+      name: "presidentImages",
+      maxCount: 2,
+    },
+    {
+      name: "vicePresidentImages",
+      maxCount: 2,
+    },
+    {
+      name: "secretaryImages",
+      maxCount: 2,
+    },
+    {
+      name: "viceSecretaryImages",
+      maxCount: 2,
+    },
+  ]),
   bureauController.updateBureau
 );
 

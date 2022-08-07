@@ -58,6 +58,7 @@ router.patch(
   "/:slideshowID",
   adminController.authRequired,
   slideshowController.getSlideshow,
+  upload.single("image"),
   slideshowController.updateSlideshow
 );
 

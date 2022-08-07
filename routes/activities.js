@@ -58,6 +58,7 @@ router.patch(
   "/:activityID",
   adminController.authRequired,
   activityController.getActivity,
+  upload.array("images", 10),
   activityController.updateActivity
 );
 

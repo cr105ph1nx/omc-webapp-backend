@@ -135,6 +135,14 @@ module.exports = {
       res.activity.hosts = req.body.hosts;
     }
 
+    if (req.files != null) {
+      let images = [];
+      await req.files.forEach((file) => {
+        images.push(file.path);
+      });
+      res.activity.images = images;
+    }
+
     try {
       const updatedActivity = await res.activity.save();
       res.status(200).json({ activity: updatedActivity });
