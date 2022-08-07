@@ -44,20 +44,20 @@ module.exports = {
         .sort({ createdAt: -1 })
         .exec((err, docs) => {
           if (err) {
-            return res.status(400).json({ error: err.message });
+            return res.status(500).json({ error: err.message });
           }
           return res
             .status(200)
             .json({ data: { totalDocs, totalPages, admins: docs } });
         });
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(500).json({ error: err.message });
     }
   },
 
   // Getting an admin by ID
   async getAdminByID(req, res, next) {
-    res.send(res.admin.email);
+    res.send(res.admin);
     next();
   },
 
@@ -85,12 +85,11 @@ module.exports = {
         process.env.TOKEN_SECRET
       );
 
-      res.status(201).json({
+      res.status(200).json({
         accessToken,
-        error: null,
       });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -103,13 +102,17 @@ module.exports = {
     }
 
     if (req.body.password != null) {
-      res.admin.password = req.body.password;
+      // hash the password
+      const salt = await bcrypt.genSalt(10);
+      const password = await bcrypt.hash(req.body.password, salt);
+      //update passoed
+      res.admin.password = password;
     }
     try {
       const updatedAdmin = await res.admin.save();
-      res.json(updatedAdmin);
+      res.status(200).json({ admin: updatedAdmin });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -121,7 +124,7 @@ module.exports = {
       // delete admin
       await res.admin.remove();
 
-      res.json({ message: "Admin deleted." });
+      res.status(200).json({ message: "Admin deleted." });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
@@ -157,9 +160,8 @@ module.exports = {
         process.env.TOKEN_SECRET
       );
 
-      res.json({
+      res.status(200).json({
         accessToken,
-        error: null,
       });
     }
     next();

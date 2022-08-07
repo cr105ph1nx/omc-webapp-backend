@@ -53,7 +53,7 @@ module.exports = {
 
   // Getting an event by ID
   async getEventByID(req, res, next) {
-    res.send(res.event.email);
+    res.send(res.event);
     next();
   },
 
@@ -79,12 +79,11 @@ module.exports = {
       });
       await event.save();
 
-      res.status(201).json({
+      res.status(200).json({
         event,
-        error: null,
       });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -101,9 +100,6 @@ module.exports = {
     if (req.body.description != null) {
       res.event.description = req.body.description;
     }
-    if (req.body.images != null) {
-      res.event.images = req.body.images;
-    }
     if (req.body.websiteUrl != null) {
       res.event.websiteUrl = req.body.websiteUrl;
     }
@@ -115,9 +111,9 @@ module.exports = {
     }
     try {
       const updatedEvent = await res.event.save();
-      res.json(updatedEvent);
+      res.status(200).json({ event: updatedEvent });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -129,7 +125,7 @@ module.exports = {
       // delete event
       await res.event.remove();
 
-      res.json({ message: "Event deleted." });
+      res.status(200).json({ message: "Event deleted." });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
@@ -169,7 +165,7 @@ module.exports = {
         .sort({ createdAt: -1 })
         .exec((err, docs) => {
           if (err) {
-            return res.status(400).json({ error: err.message });
+            return res.status(500).json({ error: err.message });
           }
           return res
             .status(200)

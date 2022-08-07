@@ -47,13 +47,13 @@ module.exports = {
             .json({ data: { totalDocs, totalPages, activities: docs } });
         });
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(500).json({ error: err.message });
     }
   },
 
   // Getting an activity by ID
   async getActivityByID(req, res, next) {
-    res.send(res.activity.email);
+    res.send(res.activity);
     next();
   },
 
@@ -83,12 +83,11 @@ module.exports = {
       });
       await activity.save();
 
-      res.status(201).json({
+      res.status(200).json({
         activity,
-        error: null,
       });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -138,9 +137,9 @@ module.exports = {
 
     try {
       const updatedActivity = await res.activity.save();
-      res.json(updatedActivity);
+      res.status(200).json({ activity: updatedActivity });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -152,7 +151,7 @@ module.exports = {
       // delete activity
       await res.activity.remove();
 
-      res.json({ message: "Activity deleted." });
+      res.status(200).json({ message: "Activity deleted." });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }

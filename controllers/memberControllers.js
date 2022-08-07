@@ -48,7 +48,7 @@ module.exports = {
             .json({ data: { totalDocs, totalPages, members: docs } });
         });
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(500).json({ error: err.message });
     }
   },
 
@@ -75,12 +75,11 @@ module.exports = {
 
     try {
       await member.save();
-      res.status(201).json({
+      res.status(200).json({
         member,
-        error: null,
       });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -120,9 +119,9 @@ module.exports = {
     }
     try {
       const updatedMember = await res.member.save();
-      res.json(updatedMember);
+      res.status(200).json({ member: updatedMember });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -134,7 +133,7 @@ module.exports = {
       // delete member
       await res.member.remove();
 
-      res.json({ message: "Member deleted." });
+      res.status(200).json({ message: "Member deleted." });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
@@ -184,7 +183,7 @@ module.exports = {
         .sort({ createdAt: -1 })
         .exec((err, docs) => {
           if (err) {
-            return res.status(400).json({ error: err.message });
+            return res.status(500).json({ error: err.message });
           }
           return res
             .status(200)

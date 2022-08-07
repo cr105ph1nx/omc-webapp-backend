@@ -47,13 +47,13 @@ module.exports = {
             .json({ data: { totalDocs, totalPages, slideshows: docs } });
         });
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(500).json({ error: err.message });
     }
   },
 
   // Getting an slideshow by ID
   async getSlideshowByID(req, res, next) {
-    res.send(res.slideshow.email);
+    res.send(res.slideshow);
     next();
   },
 
@@ -71,12 +71,11 @@ module.exports = {
       });
       await slideshow.save();
 
-      res.status(201).json({
+      res.status(200).json({
         slideshow,
-        error: null,
       });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -90,9 +89,6 @@ module.exports = {
     if (req.body.title != null) {
       res.slideshow.title = req.body.title;
     }
-    if (req.body.image != null) {
-      res.slideshow.image = req.body.image;
-    }
     if (req.body.description != null) {
       res.slideshow.description = req.body.description;
     }
@@ -101,9 +97,9 @@ module.exports = {
     }
     try {
       const updatedSlideshow = await res.slideshow.save();
-      res.json(updatedSlideshow);
+      res.status(200).json({ slideshow: updatedSlideshow });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -115,7 +111,7 @@ module.exports = {
       // delete slideshow
       await res.slideshow.remove();
 
-      res.json({ message: "Slideshow deleted." });
+      res.status(200).json({ message: "Slideshow deleted." });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }

@@ -40,14 +40,14 @@ module.exports = {
         .sort({ createdAt: -1 })
         .exec((err, docs) => {
           if (err) {
-            return res.status(400).json({ error: err.message });
+            return res.status(500).json({ error: err.message });
           }
           return res
             .status(200)
             .json({ data: { totalDocs, totalPages, reviews: docs } });
         });
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(500).json({ error: err.message });
     }
   },
 
@@ -93,7 +93,7 @@ module.exports = {
             .json({ data: { totalDocs, totalPages, reviews: docs } });
         });
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(500).json({ error: err.message });
     }
   },
 
@@ -121,7 +121,7 @@ module.exports = {
 
       res.status(200).json({ message: "Reviews censored.", unhandled });
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(500).json({ error: err.message });
     }
   },
 };

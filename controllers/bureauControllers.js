@@ -47,7 +47,7 @@ module.exports = {
             .json({ data: { totalDocs, totalPages, bureaux: docs } });
         });
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(500).json({ error: err.message });
     }
   },
 
@@ -62,9 +62,9 @@ module.exports = {
     try {
       // current year is found in req.body
       let bureau = await Bureau.findOne({ year: req.body.year });
-      res.status(201).json(bureau);
+      res.status(200).json(bureau);
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(500).json({ error: err.message });
     }
   },
 
@@ -106,7 +106,7 @@ module.exports = {
       // send object as res
       res.images = images;
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -132,9 +132,8 @@ module.exports = {
       });
 
       await bureau.save();
-      res.status(201).json({
+      res.status(200).json({
         bureau,
-        error: null,
       });
     } catch (err) {
       res.status(500).json({ error: err.message });
@@ -151,11 +150,11 @@ module.exports = {
       let bureau = await Bureau.findOne({ year: currentYear });
       bureau.isVisible = true;
       bureau.save();
-      res.status(201).json({
+      res.status(200).json({
         message: "Bureau is now visible !",
       });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -184,9 +183,9 @@ module.exports = {
     }
     try {
       const updatedBureau = await res.bureau.save();
-      res.json(updatedBureau);
+      res.status(200).json({ bureau: updatedBureau });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -198,7 +197,7 @@ module.exports = {
       // delete bureau
       await res.bureau.remove();
 
-      res.json({ message: "Bureau deleted." });
+      res.status(200).json({ message: "Bureau deleted." });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }

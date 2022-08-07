@@ -40,14 +40,14 @@ module.exports = {
         .sort({ createdAt: -1 })
         .exec((err, docs) => {
           if (err) {
-            return res.status(400).json({ error: err.message });
+            return res.status(500).json({ error: err.message });
           }
           return res
             .status(200)
             .json({ data: { totalDocs, totalPages, partners: docs } });
         });
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(500).json({ error: err.message });
     }
   },
 
@@ -72,12 +72,11 @@ module.exports = {
       });
 
       await partner.save();
-      res.status(201).json({
+      res.status(200).json({
         partner,
-        error: null,
       });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -88,17 +87,14 @@ module.exports = {
     if (req.body.name != null) {
       res.partner.name = req.body.name;
     }
-    if (req.body.logo != null) {
-      res.partner.logo = req.body.logo;
-    }
     if (req.body.url != null) {
       res.partner.url = req.body.url;
     }
     try {
       const updatedPartner = await res.partner.save();
-      res.json(updatedPartner);
+      res.status(200).json({ partner: updatedPartner });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -110,7 +106,7 @@ module.exports = {
       // delete partner
       await res.partner.remove();
 
-      res.json({ message: "Partner deleted." });
+      res.status(200).json({ message: "Partner deleted." });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }

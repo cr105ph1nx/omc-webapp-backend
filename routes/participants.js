@@ -37,7 +37,7 @@ router.delete(
   participantController.deleteParticipant
 );
 
-// Getting one participant by id
+// search for participant
 router.post(
   "/search/:page?",
   adminController.authRequired,

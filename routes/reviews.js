@@ -19,8 +19,8 @@ router.get(
 );
 
 // Getting reviews of given session ID
-router.get(
-  "/getByID/:sessionID/:page?",
+router.post(
+  "/getSessionReview/:page?",
   adminController.authRequired,
   reviewController.getSessionReviews
 );

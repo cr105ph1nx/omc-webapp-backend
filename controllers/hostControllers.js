@@ -47,7 +47,7 @@ module.exports = {
             .json({ data: { totalDocs, totalPages, hosts: docs } });
         });
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(500).json({ error: err.message });
     }
   },
 
@@ -66,17 +66,15 @@ module.exports = {
       ...(req.body.redirectPortfolio && {
         redirectPortfolio: req.body.redirectPortfolio,
       }),
-      ...(req.body.sessions && { sessions: req.body.sessions }),
     });
 
     try {
       await host.save();
-      res.status(201).json({
+      res.status(200).json({
         host,
-        error: null,
       });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -95,9 +93,9 @@ module.exports = {
     }
     try {
       const updatedHost = await res.host.save();
-      res.json(updatedHost);
+      res.status(200).json({ host: updatedHost });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -110,11 +108,11 @@ module.exports = {
       let host = res.host;
       host.sessions.push(req.body.session);
       host.save();
-      res.status(201).json({
+      res.status(200).json({
         message: "New session added to Host !",
       });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -127,11 +125,11 @@ module.exports = {
       let host = res.host;
       host.sessions.remove(req.body.session);
       host.save();
-      res.status(201).json({
+      res.status(200).json({
         message: "Session removed from Host !",
       });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -143,7 +141,7 @@ module.exports = {
       // delete host
       await res.host.remove();
 
-      res.json({ message: "Host deleted." });
+      res.status(200).json({ message: "Host deleted." });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }

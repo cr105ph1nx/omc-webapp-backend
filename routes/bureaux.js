@@ -95,7 +95,7 @@ router.delete(
 );
 
 // Setting current year visible
-router.post(
+router.patch(
   "/setVisible",
   adminController.authRequired,
   bureauController.setBureauVisible

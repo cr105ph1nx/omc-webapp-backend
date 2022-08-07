@@ -40,20 +40,20 @@ module.exports = {
         .sort({ createdAt: -1 })
         .exec((err, docs) => {
           if (err) {
-            return res.status(400).json({ error: err.message });
+            return res.status(500).json({ error: err.message });
           }
           return res
             .status(200)
             .json({ data: { totalDocs, totalPages, courses: docs } });
         });
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(500).json({ error: err.message });
     }
   },
 
   // Getting an course by ID
   async getCourseByID(req, res, next) {
-    res.send(res.course.email);
+    res.send(res.course);
     next();
   },
 
@@ -84,12 +84,11 @@ module.exports = {
 
       await course.save();
 
-      res.status(201).json({
+      res.status(200).json({
         course,
-        error: null,
       });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -108,9 +107,6 @@ module.exports = {
     }
     if (req.body.description != null) {
       res.course.description = req.body.description;
-    }
-    if (req.body.images != null) {
-      res.course.images = req.body.images;
     }
     if (req.body.location != null) {
       res.course.location = req.body.location;
@@ -139,9 +135,9 @@ module.exports = {
 
     try {
       const updatedCourse = await res.course.save();
-      res.json(updatedCourse);
+      res.status(200).json({ course: updatedCourse });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
 
     next();
@@ -153,7 +149,7 @@ module.exports = {
       // delete course
       await res.course.remove();
 
-      res.json({ message: "Course deleted." });
+      res.status(200).json({ message: "Course deleted." });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
@@ -200,7 +196,7 @@ module.exports = {
         .sort({ createdAt: -1 })
         .exec((err, docs) => {
           if (err) {
-            return res.status(400).json({ error: err.message });
+            return res.status(500).json({ error: err.message });
           }
           return res
             .status(200)
